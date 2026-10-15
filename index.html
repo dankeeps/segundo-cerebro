@@ -206,6 +206,29 @@ footer{position:relative;z-index:1;padding-block:30px 50px;text-align:center;fon
   window.addEventListener('pageshow',function(e){ if(e.persisted) topo(); });
 })();
 </script>
+<script>
+/* Meta: Pixel no navegador + API de Conversões pelo servidor (/api/evento), com o mesmo event_id para a Meta não contar duas vezes.
+   O ID do pixel entra na hora do deploy (variável META_PIXEL_ID). Sem ID, nada disso roda. */
+(function(){
+  var ID='__META_PIXEL_ID__'; if(!/^\d{5,}$/.test(ID)) { window.octoEvento=function(){}; return; }
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+  s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init',ID);
+  var ck=function(n){var m=document.cookie.match('(?:^|; )'+n+'=([^;]*)');return m?decodeURIComponent(m[1]):'';};
+  var fbclid=new URLSearchParams(location.search).get('fbclid'), criado=Date.now();
+  var fbc=function(){return ck('_fbc')||(fbclid?'fb.1.'+criado+'.'+fbclid:'');};
+  var novoId=function(){return Date.now().toString(36)+Math.random().toString(36).slice(2,10);};
+  window.octoEvento=function(nome,dados,atraso){
+    var id=novoId(); dados=dados||{};
+    fbq('track',nome,dados,{eventID:id});
+    // o servidor espera um instante para o cookie _fbp do pixel já existir
+    setTimeout(function(){ try{ fetch('/api/evento',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({event_name:nome,event_id:id,event_source_url:location.href,fbp:ck('_fbp'),fbc:fbc(),custom_data:dados})}); }catch(e){} }, atraso==null?0:atraso);
+  };
+  octoEvento('PageView',{},1200);
+})();
+</script>
 <canvas id="ceu" aria-hidden="true"></canvas>
 <div class="grao" aria-hidden="true"></div>
 
@@ -638,6 +661,22 @@ footer{position:relative;z-index:1;padding-block:30px 50px;text-align:center;fon
       window.scrollTo(0, y0 + (onde() - y0) * k); if (p < 1) requestAnimationFrame(anda); else setTimeout(() => window.scrollTo(0, onde()), 120); };
     requestAnimationFrame(anda);
   }));
+
+  /* checkout: leva junto as UTMs e o fbclid de quem chegou pelo anúncio; o clique conta como InitiateCheckout */
+  (function () {
+    const qs = new URLSearchParams(location.search);
+    document.querySelectorAll('a[href^="https://pay.hub.la/"]').forEach((a) => {
+      const u = new URL(a.href); qs.forEach((v, k) => { if (!u.searchParams.has(k)) u.searchParams.set(k, v); }); a.href = u.toString();
+      a.addEventListener('click', (e) => {
+        if (!window.fbq || e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) { window.octoEvento && octoEvento('InitiateCheckout', { value: 497, currency: 'BRL', content_name: 'Sistema Octopus' }); return; }
+        e.preventDefault(); octoEvento('InitiateCheckout', { value: 497, currency: 'BRL', content_name: 'Sistema Octopus' });
+        setTimeout(() => { location.href = a.href; }, 250);
+      });
+    });
+    // ViewContent: quando a oferta aparece na tela (uma vez)
+    const of = document.getElementById('oferta');
+    if (of && 'IntersectionObserver' in window) { const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { io.disconnect(); window.octoEvento && octoEvento('ViewContent', { value: 497, currency: 'BRL', content_name: 'Sistema Octopus' }); } }, { threshold: .3 }); io.observe(of); }
+  })();
 
   /* cartões: luz que segue o mouse */
   document.querySelectorAll('.card').forEach((c) => {

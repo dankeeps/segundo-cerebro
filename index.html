@@ -195,6 +195,16 @@ footer{position:relative;z-index:1;padding-block:30px 50px;text-align:center;fon
 @media (prefers-reduced-motion:reduce){.sobe,.sobe.antes{opacity:1;transform:none;transition:none}.grao{animation:none}html{scroll-behavior:auto}}
 </style>
 
+<script>
+/* a página sempre abre no topo: o navegador não restaura a rolagem ao atualizar e um #âncora no endereço é ignorado;
+   descer até a oferta só acontece quando a pessoa clica no botão */
+(function(){ try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
+  var topo=function(){ window.scrollTo(0,0); };
+  if(location.hash){ try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){} }
+  topo(); window.addEventListener('DOMContentLoaded',topo); window.addEventListener('load',function(){ topo(); setTimeout(topo,0); });
+  window.addEventListener('pageshow',function(e){ if(e.persisted) topo(); });
+})();
+</script>
 <canvas id="ceu" aria-hidden="true"></canvas>
 <div class="grao" aria-hidden="true"></div>
 

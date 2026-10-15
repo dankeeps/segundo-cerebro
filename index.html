@@ -77,8 +77,8 @@ p{margin:0}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;gap:26px}
 .hero .wrap>*{max-width:100%;min-width:0}
 .marca{display:flex;align-items:center;gap:10px;font:600 15px var(--display);letter-spacing:.02em;margin-bottom:12px}
-.marca img{width:38px;height:auto;display:block}
-.marca{letter-spacing:.18em}
+.marca{display:inline-flex;align-items:baseline;gap:0;font:600 22px/1 var(--display);letter-spacing:.2em;padding-block:9px;margin-bottom:12px}
+.marca img.o{height:.72em;width:auto;margin-right:.2em;display:inline-block}
 .hero h1{max-width:16ch}
 .hero .numeros{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
 .hero .numeros span{display:inline-flex;align-items:baseline;gap:8px;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--glass);font-size:15px;color:var(--mute)}
@@ -213,7 +213,7 @@ footer{position:relative;z-index:1;padding-block:30px 50px;text-align:center;fon
   <!-- 01 -->
   <section class="hero">
     <div class="wrap">
-      <div class="marca"><img src="img/aaa9af79ebf0.png" alt="" width="38" height="40">OCTOPUS</div>
+      <div class="marca" role="img" aria-label="Octopus"><img class="o" src="img/6ff21b05fc30.png" alt="" width="160" height="152"><span aria-hidden="true">CTOPUS</span></div>
       <h1 class="ajusta"><span class="l">Tenha o <span class="brilho">SEGUNDO CÉREBRO</span> que </span><span class="l">escreve suas VSLs e criativos </span><span class="l">como um copywriter 9D</span></h1>
       <div class="numeros" aria-label="Um fluxo de IA com 9 agentes, 15 skills e 196 arquivos de contexto">
         <span>Um fluxo de IA com</span><span><b>9</b> agentes</span><span><b>15</b> skills</span><span><b>196</b> arquivos de contexto</span>

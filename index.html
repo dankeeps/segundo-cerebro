@@ -93,8 +93,7 @@ p{margin:0}
   .numeros-linha{display:block}
 }
 .vsl{position:relative;width:100%;max-width:860px;margin-top:14px}
-.vsl-espera{aspect-ratio:16/9}
-.vsl vturb-smartplayer:empty+.vsl-espera{display:grid}
+
 
 /* 02 · a história */
 .historia .wrap{display:grid;gap:28px}
@@ -203,7 +202,6 @@ footer{position:relative;z-index:1;padding-block:30px 50px;text-align:center;fon
       <!-- vídeo de vendas (VTurb / ConverteAI) -->
       <div class="vsl" id="vsl">
         <vturb-smartplayer id="vid-6ad064b19b7becf84d5c6537" style="display:block;margin:0 auto;width:100%"></vturb-smartplayer>
-        <div class="midia vidro vsl-espera"><span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l12-7.5z"/></svg></span>Vídeo de vendas</div>
       </div>
       <script>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
       <link rel="preload" href="https://scripts.converteai.net/be6c149d-d866-4b05-9b05-dbb67d5c0433/players/6ad064b19b7becf84d5c6537/v4/player.js" as="script">
@@ -213,9 +211,7 @@ footer{position:relative;z-index:1;padding-block:30px 50px;text-align:center;fon
       <link rel="dns-prefetch" href="https://scripts.converteai.net">
       <link rel="dns-prefetch" href="https://images.converteai.net">
       <link rel="dns-prefetch" href="https://license.vturb.com">
-      <script>(function(){ var s=document.createElement("script"); s.src="https://scripts.converteai.net/be6c149d-d866-4b05-9b05-dbb67d5c0433/players/6ad064b19b7becf84d5c6537/v4/player.js"; s.async=true;
-        /* o quadro de espera some quando o player do VTurb carrega */
-        s.onload=function(){ var e=document.querySelector("#vsl .vsl-espera"); if(e) e.hidden=true; }; document.head.appendChild(s); })();</script>
+      <script>(function(){ var s=document.createElement("script"); s.src="https://scripts.converteai.net/be6c149d-d866-4b05-9b05-dbb67d5c0433/players/6ad064b19b7becf84d5c6537/v4/player.js"; s.async=true; document.head.appendChild(s); })();</script>
       <a class="btn" href="#oferta">Acesse o Segundo Cérebro<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </section>
